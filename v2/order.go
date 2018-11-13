@@ -55,7 +55,7 @@ func (c *Client) CreateAnOrder(ctx context.Context, orderType, side, quantity, p
 				"quantity":"%s",
 				"price":"%s",
 				"price_range":"%s",
-				"leverage_level": %d",
+				"leverage_level": %d"
 			}
 		}`
 	body := fmt.Sprintf(bodyTemplate, orderType, productID, side, quantity, price, priceRange)
