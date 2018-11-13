@@ -44,7 +44,7 @@ func (c *Client) GetOrders(ctx context.Context, productID, withDetails int, fund
 	return &orders, nil
 }
 
-func (c *Client) CreateAnOrder(ctx context.Context, orderType, side, quantity, price, priceRange string, productID, levLevel int) (*models.Order, error) {
+func (c *Client) CreateAnOrder(ctx context.Context, orderType, side, quantity, price, priceRange string, productID, levLevel int, ordDirection string) (*models.Order, error) {
 	spath := fmt.Sprintf("/orders/")
 	bodyTemplate :=
 		`{
@@ -55,10 +55,11 @@ func (c *Client) CreateAnOrder(ctx context.Context, orderType, side, quantity, p
 				"quantity":"%s",
 				"price":"%s",
 				"price_range":"%s",
-				"leverage_level": %d
+				"leverage_level": %d,
+				"order_direction": "%s"
 			}
 		}`
-	body := fmt.Sprintf(bodyTemplate, orderType, productID, side, quantity, price, priceRange, levLevel)
+	body := fmt.Sprintf(bodyTemplate, orderType, productID, side, quantity, price, priceRange, levLevel, ordDirection)
 	res, err := c.sendRequest(ctx, "POST", spath, strings.NewReader(body), nil)
 	if err != nil {
 		return nil, err
