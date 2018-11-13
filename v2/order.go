@@ -3,9 +3,10 @@ package quoinex
 import (
 	"context"
 	"fmt"
-	"github.com/jjjjpppp/quoinex-go-client/v2/models"
 	"strconv"
 	"strings"
+
+	"github.com/jjjjpppp/quoinex-go-client/v2/models"
 )
 
 func (c *Client) GetAnOrder(ctx context.Context, orderID int) (*models.Order, error) {
@@ -43,7 +44,7 @@ func (c *Client) GetOrders(ctx context.Context, productID, withDetails int, fund
 	return &orders, nil
 }
 
-func (c *Client) CreateAnOrder(ctx context.Context, orderType, side, quantity, price, priceRange string, productID int) (*models.Order, error) {
+func (c *Client) CreateAnOrder(ctx context.Context, orderType, side, quantity, price, priceRange string, productID, levLevel int) (*models.Order, error) {
 	spath := fmt.Sprintf("/orders/")
 	bodyTemplate :=
 		`{
@@ -53,7 +54,8 @@ func (c *Client) CreateAnOrder(ctx context.Context, orderType, side, quantity, p
 				"side":"%s",
 				"quantity":"%s",
 				"price":"%s",
-				"price_range":"%s"
+				"price_range":"%s",
+				"leverage_level": %d",
 			}
 		}`
 	body := fmt.Sprintf(bodyTemplate, orderType, productID, side, quantity, price, priceRange)
